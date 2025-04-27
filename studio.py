@@ -734,12 +734,18 @@ def monitor_job(job_id):
                 desc = job.progress_data.get('desc', '')
                 html = job.progress_data.get('html', '')
                 
+                # Get the latest intermediate video path from job.result
+                intermediate_video_path = job.result
+
                 # Always keep preview visible and update its value
-                yield None, job_id, gr.update(visible=True, value=preview), desc, html, gr.update(interactive=True), gr.update(interactive=True)
+                # Yield the intermediate video path along with progress updates
+                yield intermediate_video_path, job_id, gr.update(visible=True, value=preview), desc, html, gr.update(interactive=True), gr.update(interactive=True)
 
             else:
+                # Also yield the current job.result even if progress data isn't ready yet
+                intermediate_video_path = job.result
                 # Keep preview visible even when no data
-                yield None, job_id, gr.update(visible=True), '', 'Processing...', gr.update(interactive=True), gr.update(interactive=True)
+                yield intermediate_video_path, job_id, gr.update(visible=True), '', 'Processing...', gr.update(interactive=True), gr.update(interactive=True)
         
         elif job.status == JobStatus.COMPLETED:
             # Don't hide preview on completion
