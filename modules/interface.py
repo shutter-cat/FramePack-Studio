@@ -78,7 +78,7 @@ def create_interface(
                         #example_quick_prompts.click(lambda x: x[0], inputs=[example_quick_prompts], outputs=prompt, show_progress=False, queue=False)
                         with gr.Accordion("Prompt Parameters", open=False):
                             blend_sections = gr.Slider(
-                                minimum=0, maximum=10, value=4, step=1,
+                                minimum=1, maximum=10, value=4, step=1,
                                 label="Number of sections to blend between prompts"
                             )
                         with gr.Accordion("Generation Parameters", open=True):
